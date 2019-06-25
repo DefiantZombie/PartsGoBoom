@@ -17,26 +17,19 @@ namespace PartsGoBoom
             advancedTweakable = true, requireFullControl = false)]
         public void ActivateFTS(KSPActionParam param)
         {
-            part.explode();
+            ActivateFTS();
         }
 
-        [KSPField(guiName = "#SSC_PartsGoBoom_000003", isPersistant = true,
+        [KSPField(guiName = "#SSC_PartsGoBoom_000002", isPersistant = true,
             guiActiveEditor = true, guiActive = true)]
         [UI_ChooseOption(scene = UI_Scene.Editor)]
         public string FTSMode = "Single";
 
-        [KSPAction("#SSC_PartsGoBoom_000002",
-            advancedTweakable = true, requireFullControl = false)]
-        public void ActivateNewFTS(KSPActionParam param)
-        {
-            ActivateNewFTS();
-        }
-
-        [KSPEvent(guiName = "#SSC_PartsGoBoom_000002", active = true, 
+        [KSPEvent(guiName = "#SSC_PartsGoBoom_000001", active = true, 
             advancedTweakable = true, guiActive = true, 
             guiActiveEditor = false, guiActiveUncommand = true, 
             guiActiveUnfocused = true, requireFullControl = false)]
-        public void ActivateNewFTS()
+        public void ActivateFTS()
         {
             if (FTSMode == "Single")
             {
