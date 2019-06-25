@@ -12,7 +12,6 @@ namespace PartsGoBoom
             "Vessel"
         };
 
-        // LEGACY DO NOT TOUCH
         [KSPAction("#SSC_PartsGoBoom_000001",
             advancedTweakable = true, requireFullControl = false)]
         public void ActivateFTS(KSPActionParam param)
@@ -42,17 +41,16 @@ namespace PartsGoBoom
             }
             else if(FTSMode == "Vessel")
             {
-                FTSMulti(vessel.Parts, new Part[] { part });
+                FTSMulti(vessel.Parts);
                 part.explode();
             }
         }
 
-        public void FTSMulti(List<Part> parts, Part[] exclude = null)
+        public void FTSMulti(List<Part> parts)
         {
-            IEnumerable<Part> partsEx = exclude == null ? parts.ToArray() : parts.Except(exclude).ToArray();
-            foreach (Part p in partsEx)
+            foreach (Part p in parts.ToArray())
             {
-                if (p.Modules.GetModule<ModulePartsGoBoom>() == null) continue;
+                if (p.Modules.GetModule<ModulePartsGoBoom>() == null || p == part) continue;
 
                 p.explode();
             }
