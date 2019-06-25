@@ -37,5 +37,26 @@ namespace PartsGoBoom
                 control.onFieldChanged = t;
             }
         }
+
+        public static void UnpinPartActionWindow(this Part p)
+        {
+            SetPartActionWindowPin(p, false);
+        }
+
+        public static void SetPartActionWindowPin(this Part p, bool value)
+        {
+            p.PartActionWindow.SetPartActionWindowPin(value);
+        }
+
+        public static void UnpinPartActionWindow(this UIPartActionWindow paw)
+        {
+            SetPartActionWindowPin(paw, false);
+        }
+
+        public static void SetPartActionWindowPin(this UIPartActionWindow paw, bool value)
+        {
+            if (paw == null) return;
+            paw.togglePinned.isOn = value;
+        }
     }
 }

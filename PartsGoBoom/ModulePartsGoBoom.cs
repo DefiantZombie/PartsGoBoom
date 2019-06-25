@@ -32,28 +32,39 @@ namespace PartsGoBoom
         {
             if (FTSMode == "Single")
             {
-                part.explode();
+                FTS();
             }
             else if(FTSMode == "Symmetry")
             {
                 FTSMulti(part.symmetryCounterparts);
-                part.explode();
+                FTS();
             }
             else if(FTSMode == "Vessel")
             {
                 FTSMulti(vessel.Parts);
-                part.explode();
+                FTS();
             }
+
+            UIPartActionController.Instance.Deselect(false);
         }
 
         public void FTSMulti(List<Part> parts)
         {
             foreach (Part p in parts.ToArray())
             {
-                if (p.Modules.GetModule<ModulePartsGoBoom>() == null || p == part) continue;
+                if (p == part) continue;
 
-                p.explode();
+                ModulePartsGoBoom module = p.Modules.GetModule<ModulePartsGoBoom>();
+                if (module == null) continue;
+
+                module.FTS();
             }
+        }
+
+        public void FTS()
+        {
+            part.UnpinPartActionWindow();
+            part.explode();
         }
 
         public override void OnStart(StartState state)
