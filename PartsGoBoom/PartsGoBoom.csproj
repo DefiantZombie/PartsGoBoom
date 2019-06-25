@@ -51,7 +51,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions.cs" />
     <Compile Include="ModulePartsGoBoom.cs" />
+    <Compile Include="PartsGoBoom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
