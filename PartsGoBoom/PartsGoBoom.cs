@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using KSP.Localization;
 
@@ -16,8 +15,6 @@ namespace PartsGoBoom
         }
 
         public static Dictionary<Strings, string> LocalStrings;
-
-        public static event Action OnLanguageSwitchedEvent;
 
         private void Awake()
         {
@@ -36,8 +33,6 @@ namespace PartsGoBoom
             LocalStrings[Strings.Single] = Localizer.Format("#SSC_PartsGoBoom_000004");
             LocalStrings[Strings.Symmetry] = Localizer.Format("#SSC_PartsGoBoom_000005");
             LocalStrings[Strings.Vessel] = Localizer.Format("#SSC_PartsGoBoom_000006");
-
-            OnLanguageSwitchedEvent?.Invoke();
         }
 
         private void OnDestroy()

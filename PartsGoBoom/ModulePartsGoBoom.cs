@@ -73,20 +73,8 @@ namespace PartsGoBoom
         public override void OnStart(StartState state)
         {
             base.OnStart(state);
-            
-            UpdateMenu();
 
-            PartsGoBoom.OnLanguageSwitchedEvent += UpdateMenu;
-        }
-
-        protected void UpdateMenu()
-        {
             this.UpdateUIChooseOption(nameof(ftsMode), ModeOptions, PartsGoBoom.LocalStrings.Values.ToArray(), true, ftsMode);
-        }
-
-        private void OnDestroy()
-        {
-            PartsGoBoom.OnLanguageSwitchedEvent -= UpdateMenu;
         }
     }
 }
