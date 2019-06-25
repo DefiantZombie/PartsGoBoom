@@ -5,24 +5,25 @@ namespace PartsGoBoom
 {
     public class ModulePartsGoBoom : PartModule
     {
-        protected string[] ModeOptions = new string[]
+        protected readonly string[] ModeOptions = new string[]
         {
             "Single",
             "Symmetry",
             "Vessel"
         };
 
+        // LEGACY DO NOT TOUCH
         [KSPAction("#SSC_PartsGoBoom_000001",
             advancedTweakable = true, requireFullControl = false)]
         public void ActivateFTS(KSPActionParam param)
         {
-            FTS();
+            part.explode();
         }
 
         [KSPField(guiName = "#SSC_PartsGoBoom_000003", isPersistant = true,
-            guiActiveEditor = true, guiActive = true),
-            UI_ChooseOption(scene = UI_Scene.Editor)]
-        public string ftsMode = "Single";
+            guiActiveEditor = true, guiActive = true)]
+        [UI_ChooseOption(scene = UI_Scene.Editor)]
+        public string FTSMode = "Single";
 
         [KSPAction("#SSC_PartsGoBoom_000002",
             advancedTweakable = true, requireFullControl = false)]
@@ -37,19 +38,19 @@ namespace PartsGoBoom
             guiActiveUnfocused = true, requireFullControl = false)]
         public void ActivateNewFTS()
         {
-            if (ftsMode == "Single")
+            if (FTSMode == "Single")
             {
-                FTS();
+                part.explode();
             }
-            else if(ftsMode == "Symmetry")
+            else if(FTSMode == "Symmetry")
             {
                 FTSMulti(part.symmetryCounterparts);
-                FTS();
+                part.explode();
             }
-            else if(ftsMode == "Vessel")
+            else if(FTSMode == "Vessel")
             {
                 FTSMulti(vessel.Parts, new Part[] { part });
-                FTS();
+                part.explode();
             }
         }
 
@@ -58,23 +59,17 @@ namespace PartsGoBoom
             IEnumerable<Part> partsEx = exclude == null ? parts.ToArray() : parts.Except(exclude).ToArray();
             foreach (Part p in partsEx)
             {
-                ModulePartsGoBoom module = p.Modules.GetModule<ModulePartsGoBoom>();
-                if (module == null) continue;
+                if (p.Modules.GetModule<ModulePartsGoBoom>() == null) continue;
 
-                module.FTS();
+                p.explode();
             }
-        }
-
-        public void FTS()
-        {
-            part.explode();
         }
 
         public override void OnStart(StartState state)
         {
             base.OnStart(state);
 
-            this.UpdateUIChooseOption(nameof(ftsMode), ModeOptions, PartsGoBoom.LocalStrings.Values.ToArray(), true, ftsMode);
+            this.UpdateUIChooseOption(nameof(FTSMode), ModeOptions, PartsGoBoom.LocalStrings.Values.ToArray(), true, FTSMode);
         }
     }
 }
